@@ -126,7 +126,7 @@ class Tree {
         if (queue[i].right) queue.push(queue[i].right);
 
         arr.push(queue[i]);
-        callback(queue[i]);
+        if (callback !== undefined) callback(queue[i]);
 
         queue.shift();
         i--;
@@ -206,15 +206,21 @@ class Tree {
       else return rightVal;
     }
   }
+
+  rebalance() {
+    let values = this.levelOrder().map((x) => x.data);
+    console.log(values);
+    this.root = null;
+    this.buildTree(values);
+  }
 }
 
 const tree = new Tree();
 tree.buildTree([1, 3, 5]);
-tree.insert(2);
 tree.insert(8);
 tree.insert(9);
 tree.insert(7);
-tree.insert(0);
-tree.insert(-1);
 tree.prettyPrint(tree.root);
 console.log(tree.isBalanced(tree.root, 1));
+tree.rebalance();
+tree.prettyPrint(tree.root);
